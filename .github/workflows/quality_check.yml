@@ -1,27 +1,36 @@
-name: Quality Check
+name: Python CI on Windows
 
-on:
-  push:
-    branches:
-      - dev
+on: [push, pull_request]
 
 jobs:
   quality-check:
     runs-on: windows-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest pytest-cov pandas scikit-learn matplotlib pylint bandit
 
-      - name: Install dependencies
-        run: |
-          pip install pandas scikit-learn matplotlib
+    - name: Code Style Check (PEP 8)
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: Run Flake8
-        run: |
-          python -m flake8 ../models.py
+    - name: Static Analysis
+      run: |
+        pylint **/*.py
+
+    - name: Security Check
+      run: |
+        bandit -r .
+
+    - name: Unit Tests
+      run: |
+        pytest
