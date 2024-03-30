@@ -3,13 +3,14 @@ This module trains and evaluates several machine learning models on a dataset
 for heart disease prediction. It includes training for Decision Tree, SVM,
 and Logistic Regression classifiers, and serializes the trained models.
 """
-import pickle
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
+from sklearn.externals import joblib
+
 
 # Load the dataset
 df = pd.read_csv('heart_v2.csv')
@@ -35,8 +36,8 @@ print(f"Recall: {recall_dt}")
 print(f"F1: {f1_dt}")
 
 FILENAME_DT = 'DecisionTreeClassifier_model.pkl'
-with open(FILENAME_DT, 'wb') as file:
-    pickle.dump(dt, file)
+joblib.dump(dt, FILENAME_DT)
+
 
 # Apply SVM classifier
 svc = SVC()
@@ -53,8 +54,8 @@ print(f"Recall: {recall_svm}")
 print(f"F1: {f1_svm}")
 
 FILENAME_SVC = 'SVC_model.pkl'
-with open(FILENAME_SVC, 'wb') as file:
-    pickle.dump(svc, file)
+joblib.dump(svc, FILENAME_SVC)
+
 
 # Apply SVM classifier with linear kernel
 svm_f = SVC(kernel='linear', C=1.0, gamma='auto', random_state=42)
@@ -71,8 +72,8 @@ print(f"Recall: {recall_svm_f}")
 print(f"F1: {f1_svm_f}")
 
 FILENAME_SVC_LINEAR = 'SVC_model_2.pkl'
-with open(FILENAME_SVC_LINEAR, 'wb') as file:
-    pickle.dump(svm_f, file)
+joblib.dump(svm_f, FILENAME_SVC_LINEAR)
+
 
 lr = LogisticRegression()
 lr.fit(x_train, y_train)
@@ -89,5 +90,5 @@ print("Recall:", recall_lr)
 print("F1:", f1_lr)
 
 FILENAME_LR = 'logistic_regression_model.pkl'
-with open(FILENAME_LR, 'wb') as file:
-    pickle.dump(lr, file)
+joblib.dump(lr, FILENAME_LR)
+

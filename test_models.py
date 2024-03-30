@@ -1,10 +1,11 @@
 """
 Unit tests for the machine learning models.
 """
-import pickle
 import unittest
 import pandas as pd
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.externals import joblib
+
 
 class TestModels(unittest.TestCase):
     """
@@ -15,14 +16,10 @@ class TestModels(unittest.TestCase):
         self.test_data = pd.read_csv('heart_V2_test.csv')
 
         # Load trained models
-        with open('DecisionTreeClassifier_model.pkl', 'rb') as file:
-            self.dt_model = pickle.load(file)
-        with open('SVC_model.pkl', 'rb') as file:
-            self.svc_model = pickle.load(file)
-        with open('SVC_model_2.pkl', 'rb') as file:
-            self.svc_f_model = pickle.load(file)
-        with open('logistic_regression_model.pkl', 'rb') as file:
-            self.lr_model = pickle.load(file)
+        self.dt_model = joblib.load('DecisionTreeClassifier_model.pkl')
+        self.svc_model = joblib.load('SVC_model.pkl')
+        self.svc_f_model = joblib.load('SVC_model_2.pkl')
+        self.lr_model = joblib.load('logistic_regression_model.pkl')
 
     def test_decision_tree_model(self):
         """
