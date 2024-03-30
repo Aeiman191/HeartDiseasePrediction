@@ -1,10 +1,10 @@
 """
 Unit tests for the machine learning models.
 """
+import joblib
 import unittest
 import pandas as pd
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.externals import joblib
 
 
 class TestModels(unittest.TestCase):
