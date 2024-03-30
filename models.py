@@ -91,4 +91,3 @@ print("F1:", f1_lr)
 
 FILENAME_LR = 'logistic_regression_model.pkl'
 joblib.dump(lr, FILENAME_LR)
-
