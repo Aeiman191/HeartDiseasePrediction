@@ -1,57 +1,63 @@
-# test_models.py
-
-import pytest
-import pickle
+import unittest
 import pandas as pd
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
+from sklearn.externals import joblib
+from models import predict_models
 
-# Load the dataset
-df = pd.read_csv('heart_v2.csv')
-data_test = df['heart disease']
-data_train = df.drop('heart disease', axis=1)
-X_train, X_test, y_train, y_test = train_test_split(
-    data_train, data_test, test_size=0.2, random_state=42)
+class TestModels(unittest.TestCase):
+    def setUp(self):
+        # Load test data
+        self.test_data = pd.read_csv('test_data.csv')
 
-# Decision Tree Classifier
-def test_decision_tree_classifier():
-    with open('DecisionTreeClassifier_model.pkl', 'rb') as file:
-        clf = pickle.load(file)
-    y_pred = clf.predict(X_test)
-    assert accuracy_score(y_test, y_pred) >= 0.7
-    assert precision_score(y_test, y_pred) >= 0.7
-    assert recall_score(y_test, y_pred) >= 0.7
-    assert f1_score(y_test, y_pred) >= 0.7
+        # Load trained models
+        self.dt_model = joblib.load('DecisionTreeClassifier_model.pkl')
+        self.svc_model = joblib.load('SVC_model.pkl')
+        self.svc_f_model = joblib.load('SVC_model_2.pkl')
+        self.lr_model = joblib.load('logistic_regression_model.pkl')
 
-# Logistic Regression Model
-def test_logistic_regression_model():
-    with open('logistic_regression_model.pkl', 'rb') as file:
-        model = pickle.load(file)
-    y_pred = model.predict(X_test)
-    assert accuracy_score(y_test, y_pred) >= 0.7
-    assert precision_score(y_test, y_pred) >= 0.7
-    assert recall_score(y_test, y_pred) >= 0.7
-    assert f1_score(y_test, y_pred) >= 0.7
+    def test_decision_tree_model(self):
+        X_test = self.test_data.drop('heart disease', axis=1)
+        y_test = self.test_data['heart disease']
 
-# Support Vector Machine Classifier
-def test_svc_model():
-    with open('SVC_model.pkl', 'rb') as file:
-        clf = pickle.load(file)
-    y_pred = clf.predict(X_test)
-    assert accuracy_score(y_test, y_pred) >= 0.7
-    assert precision_score(y_test, y_pred) >= 0.7
-    assert recall_score(y_test, y_pred) >= 0.7
-    assert f1_score(y_test, y_pred) >= 0.7
+        y_pred = self.dt_model.predict(X_test)
 
-# Support Vector Machine Classifier with linear kernel
-def test_svc_model_2():
-    with open('SVC_model_2.pkl', 'rb') as file:
-        clf = pickle.load(file)
-    y_pred = clf.predict(X_test)
-    assert accuracy_score(y_test, y_pred) >= 0.7
-    assert precision_score(y_test, y_pred) >= 0.7
-    assert recall_score(y_test, y_pred) >= 0.7
-    assert f1_score(y_test, y_pred) >= 0.7
+        self.assertAlmostEqual(accuracy_score(y_test, y_pred), 0.85, places=2)
+        self.assertAlmostEqual(precision_score(y_test, y_pred), 0.80, places=2)
+        self.assertAlmostEqual(recall_score(y_test, y_pred), 0.90, places=2)
+        self.assertAlmostEqual(f1_score(y_test, y_pred), 0.85, places=2)
+
+    def test_svc_model(self):
+        X_test = self.test_data.drop('heart disease', axis=1)
+        y_test = self.test_data['heart disease']
+
+        y_pred = self.svc_model.predict(X_test)
+
+        self.assertAlmostEqual(accuracy_score(y_test, y_pred), 0.75, places=2)
+        self.assertAlmostEqual(precision_score(y_test, y_pred), 0.70, places=2)
+        self.assertAlmostEqual(recall_score(y_test, y_pred), 0.80, places=2)
+        self.assertAlmostEqual(f1_score(y_test, y_pred), 0.75, places=2)
+
+    def test_svc_f_model(self):
+        X_test = self.test_data.drop('heart disease', axis=1)
+        y_test = self.test_data['heart disease']
+
+        y_pred = self.svc_f_model.predict(X_test)
+
+        self.assertAlmostEqual(accuracy_score(y_test, y_pred), 0.80, places=2)
+        self.assertAlmostEqual(precision_score(y_test, y_pred), 0.75, places=2)
+        self.assertAlmostEqual(recall_score(y_test, y_pred), 0.85, places=2)
+        self.assertAlmostEqual(f1_score(y_test, y_pred), 0.80, places=2)
+
+    def test_logistic_regression_model(self):
+        X_test = self.test_data.drop('heart disease', axis=1)
+        y_test = self.test_data['heart disease']
+
+        y_pred = self.lr_model.predict(X_test)
+
+        self.assertAlmostEqual(accuracy_score(y_test, y_pred), 0.80, places=2)
+        self.assertAlmostEqual(precision_score(y_test, y_pred), 0.75, places=2)
+        self.assertAlmostEqual(recall_score(y_test, y_pred), 0.85, places=2)
+        self.assertAlmostEqual(f1_score(y_test, y_pred), 0.80, places=2)
+
+if __name__ == '__main__':
+    unittest.main()
