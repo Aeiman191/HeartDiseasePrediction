@@ -10,7 +10,7 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/Aeiman191/HeartDiseasePrediction.git' // Your GitHub repository
             }
-        }
+        }git 
         stage('Build Docker image') {
             steps {
                 script {
