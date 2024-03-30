@@ -14,7 +14,6 @@ class TestModels(unittest.TestCase):
     def setUp(self):
         # Load test data
         self.test_data = pd.read_csv('heart_V2_test.csv')
-
         # Load trained models
         self.dt_model = joblib.load('DecisionTreeClassifier_model.pkl')
         self.svc_model = joblib.load('SVC_model.pkl')
@@ -27,9 +26,7 @@ class TestModels(unittest.TestCase):
         """
         x_test = self.test_data.drop('heart disease', axis=1)
         y_test = self.test_data['heart disease']
-
         y_pred = self.dt_model.predict(x_test)
-
         self.assertGreaterEqual(accuracy_score(y_test, y_pred), 0.50)
         self.assertGreaterEqual(precision_score(y_test, y_pred), 0.50)
         self.assertGreaterEqual(recall_score(y_test, y_pred), 0.50)
@@ -42,9 +39,7 @@ class TestModels(unittest.TestCase):
         """
         x_test = self.test_data.drop('heart disease', axis=1)
         y_test = self.test_data['heart disease']
-
         y_pred = self.svc_model.predict(x_test)
-        
         self.assertGreaterEqual(accuracy_score(y_test, y_pred), 0.50)
         self.assertGreaterEqual(precision_score(y_test, y_pred), 0.50)
         self.assertGreaterEqual(recall_score(y_test, y_pred), 0.40)
@@ -57,9 +52,7 @@ class TestModels(unittest.TestCase):
         """
         x_test = self.test_data.drop('heart disease', axis=1)
         y_test = self.test_data['heart disease']
-
         y_pred = self.svc_f_model.predict(x_test)
-
         self.assertGreaterEqual(accuracy_score(y_test, y_pred), 0.50)
         self.assertGreaterEqual(precision_score(y_test, y_pred), 0.50)
         self.assertGreaterEqual(recall_score(y_test, y_pred), 0.50)
@@ -72,9 +65,7 @@ class TestModels(unittest.TestCase):
         """
         x_test = self.test_data.drop('heart disease', axis=1)
         y_test = self.test_data['heart disease']
-
         y_pred = self.lr_model.predict(x_test)
-
         self.assertGreaterEqual(accuracy_score(y_test, y_pred), 0.50)
         self.assertGreaterEqual(precision_score(y_test, y_pred), 0.50)
         self.assertGreaterEqual(recall_score(y_test, y_pred), 0.50)
