@@ -1,0 +1,27 @@
+name: Quality Check
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  quality-check:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      
+      - name: Install dependencies
+        run: |
+          pip install pandas scikit-learn matplotlib
+      
+      - name: Run Flake8
+        run: |
+          python -m flake8
