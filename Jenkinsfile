@@ -13,9 +13,9 @@ pipeline {
                 // Build and push Docker image to Docker Hub
                 script {
                     // Example Docker commands for Windows
-                    bat 'docker build -t heartdiseaseprediction .'
+                    bat 'docker build -t aeiman/heartdiseaseprediction .'
                     bat 'docker login -u aeiman -p khan12345'
-                    bat 'docker tag heartdiseaseprediction aeiman/heartdiseaseprediction:latest'
+                    bat 'docker tag aeiman/heartdiseaseprediction aeiman/heartdiseaseprediction:latest'
                     bat 'docker push aeiman/heartdiseaseprediction:latest'
                 }
             }
