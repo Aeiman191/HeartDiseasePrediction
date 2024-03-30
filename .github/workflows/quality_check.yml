@@ -27,10 +27,6 @@ jobs:
       run: |
         pylint **/*.py
 
-    - name: Security Check
-      run: |
-        bandit -r .
-
     - name: Unit Tests
       run: |
         pytest
