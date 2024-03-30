@@ -12,7 +12,7 @@ class TestModels(unittest.TestCase):
     """
     def setUp(self):
         # Load test data
-        self.test_data = pd.read_csv('test_data.csv')
+        self.test_data = pd.read_csv('heart_V2_test.csv')
 
         # Load trained models
         with open('DecisionTreeClassifier_model.pkl', 'rb') as file:
