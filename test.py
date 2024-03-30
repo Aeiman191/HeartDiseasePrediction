@@ -1,11 +1,10 @@
 """
 Unit tests for the machine learning models.
 """
+import pickle
 import unittest
 import pandas as pd
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-import pickle
-from models import dt, svc, svm_f, lr
 
 class TestModels(unittest.TestCase):
     """
