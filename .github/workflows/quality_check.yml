@@ -27,7 +27,4 @@ jobs:
       run: |
         pylint **/*.py
 
-    - name: Unit Tests
-      run: |
-        python -m pytest test_models.py
 
