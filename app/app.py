@@ -1,18 +1,25 @@
+"""
+This is a Flask application for serving a machine learning model.
+"""
+
 from flask import Flask, request, jsonify
 import joblib
 import pandas as pd
 
 app = Flask(__name__)
 
-# Assuming model.pkl is your trained model file
-model = joblib.load('model.pkl')
-
 @app.route('/')
 def home():
+    """
+    Home endpoint returning a welcome message.
+    """
     return "Welcome to the Heart Disease Prediction API!"
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    """
+    Predict endpoint that receives input data and returns model predictions.
+    """
     data = request.json
     df = pd.DataFrame(data, index=[0])
     prediction = model.predict(df)
