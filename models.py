@@ -1,17 +1,10 @@
-"""
-This module trains and evaluates several machine learning models on a dataset for heart disease prediction.
-It includes training for Decision Tree, SVM, and Logistic Regression classifiers, and serializes the trained models.
-"""
-
-import pickle
 import pandas as pd
-from sklearn import metrics
-from sklearn.datasets import load_iris  # Even though load_iris is unused, assuming it might be used elsewhere
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
+import pickle
 
 # Load the dataset
 df = pd.read_csv('heart_v2.csv')
@@ -25,18 +18,16 @@ x_train, x_test, y_train, y_test = train_test_split(
 # Train the decision tree classifier
 dt = DecisionTreeClassifier()
 dt.fit(x_train, y_train)
-# Predict the labels of the test set
 y_pred_dt = dt.predict(x_test)
-# Calculate the accuracy of the classifier
 accuracy_dt = accuracy_score(y_test, y_pred_dt)
 precision_dt = precision_score(y_test, y_pred_dt)
 recall_dt = recall_score(y_test, y_pred_dt)
 f1_dt = f1_score(y_test, y_pred_dt)
-print("Decision Tree Classifier" + "\n")
-print("Accuracy:", accuracy_dt)
-print("Precision:", precision_dt)
-print("Recall:", recall_dt)
-print("F1:", f1_dt)
+print("Decision Tree Classifier\n")
+print(f"Accuracy: {accuracy_dt}")
+print(f"Precision: {precision_dt}")
+print(f"Recall: {recall_dt}")
+print(f"F1: {f1_dt}")
 
 FILENAME_DT = 'DecisionTreeClassifier_model.pkl'
 with open(FILENAME_DT, 'wb') as file:
@@ -46,16 +37,15 @@ with open(FILENAME_DT, 'wb') as file:
 svc = SVC()
 svc.fit(x_train, y_train)
 y_pred_svc = svc.predict(x_test)
-
 accuracy_svm = accuracy_score(y_test, y_pred_svc)
 precision_svm = precision_score(y_test, y_pred_svc)
 recall_svm = recall_score(y_test, y_pred_svc)
 f1_svm = f1_score(y_test, y_pred_svc)
-print("\nSupport Vector Machine Classifier" + "\n")
-print("Accuracy: ", accuracy_svm)
-print("Precision: ", precision_svm)
-print("Recall: ", recall_svm)
-print("F1: ", f1_svm)
+print("\nSupport Vector Machine Classifier\n")
+print(f"Accuracy: {accuracy_svm}")
+print(f"Precision: {precision_svm}")
+print(f"Recall: {recall_svm}")
+print(f"F1: {f1_svm}")
 
 FILENAME_SVC = 'SVC_model.pkl'
 with open(FILENAME_SVC, 'wb') as file:
@@ -69,17 +59,16 @@ accuracy_svm_f = accuracy_score(y_test, y_pred_svm_f)
 precision_svm_f = precision_score(y_test, y_pred_svm_f)
 recall_svm_f = recall_score(y_test, y_pred_svm_f)
 f1_svm_f = f1_score(y_test, y_pred_svm_f)
-print("\n\nSupport Vector Machine with linear kernel" + "\n")
-print("Accuracy: ", accuracy_svm_f)
-print("Precision: ", precision_svm_f)
-print("Recall: ", recall_svm_f)
-print("F1: ", f1_svm_f)
+print("\nSupport Vector Machine with linear kernel\n")
+print(f"Accuracy: {accuracy_svm_f}")
+print(f"Precision: {precision_svm_f}")
+print(f"Recall: {recall_svm_f}")
+print(f"F1: {f1_svm_f}")
 
 FILENAME_SVC_LINEAR = 'SVC_model_2.pkl'
 with open(FILENAME_SVC_LINEAR, 'wb') as file:
     pickle.dump(svm_f, file)
 
-# Logistic Regression
 lr = LogisticRegression()
 lr.fit(x_train, y_train)
 y_pred_lr = lr.predict(x_test)
