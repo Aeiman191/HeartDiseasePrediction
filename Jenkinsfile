@@ -10,7 +10,7 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/Aeiman191/HeartDiseasePrediction.git' // Your GitHub repository
             }
-            
+        }
         stage('Build Docker image') {
             steps {
                 script {
@@ -27,10 +27,15 @@ pipeline {
                 }
             }
         }
-        stage('Clean up local image') {
-            steps {
-                bat "docker rmi $registry:$BUILD_NUMBER"
-            }
+    }
+    post {
+        success {
+            emailext (
+                subject: "Docker Image Build Successful",
+                body: "The Docker image build was successful.",
+                recipientProviders: [[$class: 'CulpritsRecipientProvider']],
+                attachLog: true
+            )
         }
     }
 }
