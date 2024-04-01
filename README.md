@@ -4,3 +4,4 @@ The Heart Disease Prediction Model CI/CD Pipeline project aims to develop and de
 
 ![Screenshot](image.png)
 ![Screenshot](image5.png)
+!["Heart Disease Prediction"](image6.png)
