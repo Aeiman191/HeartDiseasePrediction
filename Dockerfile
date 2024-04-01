@@ -13,5 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy all the project files into the container
 COPY . .
 
-# Run the unit tests when the container launches
-CMD ["python", "test.py"]
+# Expose the port on which your Flask app will run
+EXPOSE 5000
+
+# Command to run the Flask application
+CMD ["python", "app.py"]

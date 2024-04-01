@@ -27,10 +27,15 @@ pipeline {
                 }
             }
         }
-        stage('Clean up local image') {
-            steps {
-                bat "docker rmi $registry:$BUILD_NUMBER"
-            }
+    }
+    post {
+        success {
+            emailext (
+                subject: "Docker Image Build Successful",
+                body: "The Docker image build was successful.",
+                recipientProviders: [[$class: 'CulpritsRecipientProvider']],
+                attachLog: true
+            )
         }
     }
 }
